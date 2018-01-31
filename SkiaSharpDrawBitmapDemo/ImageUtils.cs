@@ -71,11 +71,10 @@ namespace SkiaSharpDrawBitmapDemo
             using (var context = new CGBitmapContext(pixmap.GetPixels(), pixmap.Width, pixmap.Height, 8, pixmap.RowBytes, colorSpace, CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big))
             {
                 CheckBytes(bitmap.Bytes);
-                SKCanvas canvas = new SKCanvas(bitmap);
-                canvas.Clear();
-                canvas.Flush();
+                CGRect rect = new CGRect(0, 0, cgImage.Width, cgImage.Height);
+                context.ClearRect(rect);
                 CheckBytes(bitmap.Bytes);
-                context.DrawImage(new CGRect(0, 0, cgImage.Width, cgImage.Height), cgImage);
+                context.DrawImage(rect, cgImage);
                 CheckBytes(bitmap.Bytes);
             }
             return bitmap;
