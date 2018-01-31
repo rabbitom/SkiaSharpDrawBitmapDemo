@@ -30,18 +30,18 @@ namespace SkiaSharpDrawBitmapDemo
         }
 #endif
 
-        static void CheckBytes(Byte[] bytes, int rowBytes = 0)
+        static void CheckBytes(Byte[] bytes, int width = 0)
         {
             int nonEmptyCount = 0;
             for (int i = 0; i < bytes.Length; i++)
             {
                 if (bytes[i] != 0)
                 {
-                    if(rowBytes > 0) {
+                    if(width > 0) {
                         int position = i / 4;
                         int rgba = position % 4;
-                        int row = position / rowBytes;
-                        int column = position % rowBytes;
+                        int row = position / width;
+                        int column = position % width;
                         Console.WriteLine("non empty byte: index=" + i + ", row=" + row + ", column=" + column + ", rgba=" + rgba + ", value=" + bytes[i]);
                     }
                     nonEmptyCount++;
