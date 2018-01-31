@@ -61,23 +61,24 @@ namespace SkiaSharpDrawBitmapDemo
             return image.ToSKBitmap();
 #else
             UIImage image = await imageLoader.LoadImageAsync(imageSource);
-            //return image.ToSKBitmap();
+            return image.ToSKBitmap();
 
-            CGImage cgImage = image.CGImage;
-            var info = new SKImageInfo((int)cgImage.Width, (int)cgImage.Height);
-            var bitmap = new SKBitmap(info);
-            using (var pixmap = bitmap.PeekPixels())
-            using (var colorSpace = CGColorSpace.CreateDeviceRGB())
-            using (var context = new CGBitmapContext(pixmap.GetPixels(), pixmap.Width, pixmap.Height, 8, pixmap.RowBytes, colorSpace, CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big))
-            {
-                CheckBytes(bitmap.Bytes);
-                CGRect rect = new CGRect(0, 0, cgImage.Width, cgImage.Height);
-                context.ClearRect(rect);
-                CheckBytes(bitmap.Bytes);
-                context.DrawImage(rect, cgImage);
-                CheckBytes(bitmap.Bytes);
-            }
-            return bitmap;
+            //fix the problem of drawing abnormal pixels
+            //CGImage cgImage = image.CGImage;
+            //var info = new SKImageInfo((int)cgImage.Width, (int)cgImage.Height);
+            //var bitmap = new SKBitmap(info);
+            //using (var pixmap = bitmap.PeekPixels())
+            //using (var colorSpace = CGColorSpace.CreateDeviceRGB())
+            //using (var context = new CGBitmapContext(pixmap.GetPixels(), pixmap.Width, pixmap.Height, 8, pixmap.RowBytes, colorSpace, CGBitmapFlags.PremultipliedLast | CGBitmapFlags.ByteOrder32Big))
+            //{
+            //    CheckBytes(bitmap.Bytes);
+            //    CGRect rect = new CGRect(0, 0, cgImage.Width, cgImage.Height);
+            //    context.ClearRect(rect);
+            //    CheckBytes(bitmap.Bytes);
+            //    context.DrawImage(rect, cgImage);
+            //    CheckBytes(bitmap.Bytes);
+            //}
+            //return bitmap;
 #endif
         }
     }
